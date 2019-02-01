@@ -1,5 +1,7 @@
 package br.com.concrete.rodrigorocha.desafiokotlin
 
+import br.com.concrete.rodrigorocha.desafiokotlin.config.ApplicationConfig
+
 fun main(args: Array<String>) {
-    println("Desafio Kotlin | Concrete")
+    ApplicationConfig().setup().start()
 }

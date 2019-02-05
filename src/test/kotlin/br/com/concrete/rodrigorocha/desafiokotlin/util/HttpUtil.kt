@@ -1,5 +1,6 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.util
 
+import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.UserResponse
 import com.mashape.unirest.http.ObjectMapper
 import com.mashape.unirest.http.Unirest
 import com.mashape.unirest.http.Unirest.setObjectMapper
@@ -34,13 +35,13 @@ class HttpUtil(port: Int) {
     inline fun <reified T> post(path: String) =
             Unirest.post("$origin$path").headers(headers).asObject(T::class.java)
 
-    inline fun <reified T> post(path: String, body: Any) =
-        Unirest.post("$origin$path").headers(headers).body(body).asObject(T::class.java)
+    inline fun post(path: String, body: Any) =
+        Unirest.post(origin + path).headers(headers).body(body).asObject(UserResponse::class.java)
 
     inline fun <reified T> get(path: String, params: Map<String, Any>? = null) =
             Unirest.get("$origin$path").headers(headers).asObject(T::class.java)
 
     inline fun <reified T> put(path: String, body: Any) =
             Unirest.put("$origin$path").headers(headers).body(body).asObject(T::class.java)
-    
+
 }

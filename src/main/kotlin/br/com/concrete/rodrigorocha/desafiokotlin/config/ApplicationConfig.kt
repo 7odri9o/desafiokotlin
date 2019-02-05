@@ -2,6 +2,7 @@ package br.com.concrete.rodrigorocha.desafiokotlin.config
 
 import br.com.concrete.rodrigorocha.desafiokotlin.config.ModulesConfig.allModules
 import br.com.concrete.rodrigorocha.desafiokotlin.web.Router
+import br.com.concrete.rodrigorocha.desafiokotlin.web.handlers.ErrorExceptionMapping
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.javalin.Javalin
@@ -26,6 +27,7 @@ class ApplicationConfig : KoinComponent {
                 app.enableCorsForAllOrigins()
                     .contextPath(getProperty("context"))
                 router.register(app)
+                ErrorExceptionMapping.register(app)
                 app.port(getProperty("server_port"))
             }
     }

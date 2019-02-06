@@ -3,6 +3,7 @@ package br.com.concrete.rodrigorocha.desafiokotlin.config
 import br.com.concrete.rodrigorocha.desafiokotlin.config.ModulesConfig.allModules
 import br.com.concrete.rodrigorocha.desafiokotlin.web.Router
 import br.com.concrete.rodrigorocha.desafiokotlin.web.handlers.ErrorExceptionMapping
+import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.javalin.Javalin
@@ -36,6 +37,7 @@ class ApplicationConfig : KoinComponent {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         JavalinJackson.configure(
             jacksonObjectMapper()
+                .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                 .setDateFormat(dateFormat)
                 .configure(SerializationFeature.WRITE_DATES_WITH_ZONE_ID, true))

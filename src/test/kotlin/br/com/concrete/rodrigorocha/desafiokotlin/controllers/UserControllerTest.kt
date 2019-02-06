@@ -134,7 +134,7 @@ class UserControllerTest {
 
         val response: HttpResponse<UserResponse> = http.post("/api/users", userRequest)
 
-        assertNotNull(response.body.token)
+        assertNotNull(response.body)
     }
 
     @Test
@@ -145,7 +145,7 @@ class UserControllerTest {
         val phones = listOf(PhoneRequest("11", "12345678"))
         val userRequest = UserRequest(name, email, password, phones)
 
-        val response = http.post("/api/users", userRequest)
+        val response: HttpResponse<UserResponse> = http.post("/api/users", userRequest)
 
         assertEquals(201, response.status)
     }

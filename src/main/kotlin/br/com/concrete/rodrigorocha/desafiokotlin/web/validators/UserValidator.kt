@@ -1,5 +1,6 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.web.validators
 
+import br.com.concrete.rodrigorocha.desafiokotlin.domain.extensions.isEmailInvalid
 import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.UserRequest
 import io.javalin.BadRequestResponse
 import io.javalin.Context
@@ -18,8 +19,16 @@ class UserValidator {
             throw BadRequestResponse("O Campo Email deve ser preenchido")
         }
 
+        if (userRequest.email.isEmailInvalid()) {
+            throw BadRequestResponse("Formato de email inválido")
+        }
+
         if (userRequest.password.isNullOrBlank() || userRequest.password.isEmpty()) {
             throw BadRequestResponse("O Campo Password deve ser preenchido")
+        }
+
+        if (userRequest.phones.isNullOrEmpty()) {
+            throw BadRequestResponse("O Campo Phones deve ser preenchido")
         }
 
         val hasInvalidPhoneDDD = userRequest.phones!!.any { it.ddd.isNullOrBlank() || it.ddd.isEmpty() }

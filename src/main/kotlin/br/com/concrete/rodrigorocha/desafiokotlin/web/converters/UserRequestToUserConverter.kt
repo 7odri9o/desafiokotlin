@@ -16,8 +16,8 @@ class UserRequestToUserConverter(
 
         return User(
             null,
-            userRequest.name,
-            userRequest.email,
+            userRequest.name!!,
+            userRequest.email!!,
             userRequest.password,
             userRequest.phones!!.map { convertPhoneRequestToPhone(it) })
     }

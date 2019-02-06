@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class UserRequest(
-    val name: String,
-    val email: String,
-    val password: String?,
-    val phones: List<PhoneRequest>?
-)
+    val name: String? = null,
+    val email: String? = null,
+    val password: String? = null,
+    val phones: List<PhoneRequest>? = null)

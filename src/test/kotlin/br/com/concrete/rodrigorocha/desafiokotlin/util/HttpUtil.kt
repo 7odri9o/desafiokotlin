@@ -35,8 +35,8 @@ class HttpUtil(port: Int) {
     inline fun <reified T> post(path: String) =
             Unirest.post("$origin$path").headers(headers).asObject(T::class.java)
 
-    inline fun post(path: String, body: Any) =
-        Unirest.post(origin + path).headers(headers).body(body).asObject(UserResponse::class.java)
+    inline fun <reified T> post(path: String, body: Any) =
+        Unirest.post(origin + path).headers(headers).body(body).asObject(T::class.java)
 
     inline fun <reified T> get(path: String, params: Map<String, Any>? = null) =
             Unirest.get("$origin$path").headers(headers).asObject(T::class.java)

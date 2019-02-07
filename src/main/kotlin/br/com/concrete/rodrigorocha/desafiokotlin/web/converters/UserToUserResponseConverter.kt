@@ -9,9 +9,9 @@ class UserToUserResponseConverter {
         return UserResponse(
             user.id!!,
             user.created!!,
-            user.modified,
-            user.last_login,
-            user.token,
+            user.modified!!,
+            user.last_login!!,
+            user.token!!,
             user.name,
             user.email)
     }

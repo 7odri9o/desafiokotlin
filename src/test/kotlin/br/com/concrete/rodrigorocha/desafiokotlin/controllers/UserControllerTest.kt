@@ -5,6 +5,7 @@ import br.com.concrete.rodrigorocha.desafiokotlin.util.HttpUtil
 import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.PhoneRequest
 import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.UserRequest
 import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.UserResponse
+import br.com.concrete.rodrigorocha.desafiokotlin.web.handlers.ErrorResponse
 import com.mashape.unirest.http.HttpResponse
 import io.javalin.Javalin
 import junit.framework.Assert.assertEquals
@@ -41,7 +42,7 @@ class UserControllerTest {
         val phones = listOf(PhoneRequest("11", "12345678"))
         val userRequest = UserRequest(name, email, password, phones)
 
-        val response = http.post("/api/users", userRequest)
+        val response: HttpResponse<UserResponse> = http.post("/api/users", userRequest)
 
         assertEquals(201, response.status)
     }
@@ -145,8 +146,8 @@ class UserControllerTest {
         val phones = listOf(PhoneRequest("11", "12345678"))
         val userRequest = UserRequest(name, email, password, phones)
 
-        val response: HttpResponse<UserResponse> = http.post("/api/users", userRequest)
+        val response: HttpResponse<ErrorResponse> = http.post("/api/users", userRequest)
 
-        assertEquals(201, response.status)
+        assertEquals("Formato de email inválido", response.body.message)
     }
 }

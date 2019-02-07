@@ -27,6 +27,7 @@ dependencies {
 
     testCompile "junit:junit:4.+"
     testCompile "com.mashape.unirest:unirest-java:1.+"
+    testCompile 'io.mockk:mockk:1.9'
 }
 
 compileKotlin {

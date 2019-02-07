@@ -1,4 +1,4 @@
-package br.com.concrete.rodrigorocha.desafiokotlin.controllers
+package br.com.concrete.rodrigorocha.desafiokotlin.web.controllers
 
 import br.com.concrete.rodrigorocha.desafiokotlin.config.ApplicationConfig
 import br.com.concrete.rodrigorocha.desafiokotlin.util.HttpUtil

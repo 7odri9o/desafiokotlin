@@ -14,7 +14,7 @@ import org.junit.AfterClass
 import org.junit.BeforeClass
 import org.junit.Test
 
-class UserControllerTest {
+class UserControllerIntegrationTest {
 
     companion object {
 

@@ -1,5 +1,6 @@
-package br.com.concrete.rodrigorocha.desafiokotlin.web.converters
+package br.com.concrete.rodrigorocha.desafiokotlin.web.converters.userrequesttouserconverter
 
+import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserRequestToUserConverter
 import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.PhoneRequest
 import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.UserRequest
 import br.com.concrete.rodrigorocha.desafiokotlin.web.validators.UserValidator
@@ -10,7 +11,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class UserRequestToUserConverterTest {
+class HappyPath {
 
     lateinit var userValidator: UserValidator
     lateinit var context: Context

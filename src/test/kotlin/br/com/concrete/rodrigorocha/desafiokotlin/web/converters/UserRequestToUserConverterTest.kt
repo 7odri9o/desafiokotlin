@@ -1,6 +1,5 @@
-package br.com.concrete.rodrigorocha.desafiokotlin.web.converters.userrequesttouserconverter
+package br.com.concrete.rodrigorocha.desafiokotlin.web.converters
 
-import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserRequestToUserConverter
 import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.PhoneRequest
 import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.UserRequest
 import br.com.concrete.rodrigorocha.desafiokotlin.web.validators.UserValidator
@@ -11,7 +10,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class HappyPath {
+class UserRequestToUserConverterTest {
 
     lateinit var userValidator: UserValidator
     lateinit var context: Context
@@ -104,6 +103,6 @@ class HappyPath {
 
         val user = converter.convert(context)
 
-        Assert.assertEquals(1, user.phones.size)
+        Assert.assertEquals(1, user.phones!!.size)
     }
 }

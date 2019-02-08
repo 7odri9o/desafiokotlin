@@ -1,6 +1,5 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.util
 
-import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.UserResponse
 import com.mashape.unirest.http.ObjectMapper
 import com.mashape.unirest.http.Unirest
 import com.mashape.unirest.http.Unirest.setObjectMapper

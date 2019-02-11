@@ -7,7 +7,6 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.util.*
 import javax.sql.DataSource
 
 class UserRepository(private val dataSource: DataSource) {
@@ -32,16 +31,20 @@ class UserRepository(private val dataSource: DataSource) {
                 row[Users.name] = user.name
                 row[Users.email] = user.email
                 row[Users.password] = user.password!!
+                row[Users.created] = user.created!!
+                row[Users.modified] = user.modified!!
+                row[Users.last_login] = user.last_login!!
+                row[Users.token] = user.token!!
             }.value
 
-            val currentDate = Date()
-
-            val test = user.copy(id = id,
-                created = currentDate,
-                modified = currentDate,
-                last_login = currentDate,
-                token = "token")
-            test
+            user.copy(
+                id = id,
+                name = user.name,
+                email = user.email,
+                created = user.created,
+                modified = user.modified,
+                last_login = user.last_login,
+                token = user.token)
         }
     }
 

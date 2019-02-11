@@ -8,9 +8,9 @@ class UserToUserResponseConverter {
     fun convert(user: User) : UserResponse {
         return UserResponse(
             user.id!!,
-            user.created!!,
-            user.modified!!,
-            user.last_login!!,
+            user.created.toString(),
+            user.modified.toString(),
+            user.last_login.toString(),
             user.token!!,
             user.name,
             user.email)

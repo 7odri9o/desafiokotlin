@@ -1,6 +1,5 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.web.converters
 
-import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.PhoneRequest
 import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.UserRequest
 import br.com.concrete.rodrigorocha.desafiokotlin.web.validators.UserValidator
 import io.javalin.Context
@@ -28,8 +27,7 @@ class UserRequestToUserConverterTest {
         val userRequest = UserRequest(
             "Geraldo Azevedo",
             "geraldo.azevedo@gmail.com",
-            "12345678",
-            listOf(PhoneRequest("11", "12345678")))
+            "12345678")
 
         every { userValidator.validateUserRequest(context) }.returns(userRequest)
 
@@ -45,8 +43,7 @@ class UserRequestToUserConverterTest {
         val userRequest = UserRequest(
             "Geraldo Azevedo",
             "geraldo.azevedo@gmail.com",
-            "12345678",
-            listOf(PhoneRequest("11", "12345678")))
+            "12345678")
 
         every { userValidator.validateUserRequest(context) }.returns(userRequest)
 
@@ -62,8 +59,7 @@ class UserRequestToUserConverterTest {
         val userRequest = UserRequest(
             "Geraldo Azevedo",
             "geraldo.azevedo@gmail.com",
-            "12345678",
-            listOf(PhoneRequest("11", "12345678")))
+            "12345678")
 
         every { userValidator.validateUserRequest(context) }.returns(userRequest)
 
@@ -79,30 +75,12 @@ class UserRequestToUserConverterTest {
         val userRequest = UserRequest(
             "Geraldo Azevedo",
             "geraldo.azevedo@gmail.com",
-            "12345678",
-            listOf(PhoneRequest("11", "12345678")))
+            "12345678")
 
         every { userValidator.validateUserRequest(context) }.returns(userRequest)
 
         val user = converter.convert(context)
 
         Assert.assertEquals("12345678", user.password)
-    }
-
-    @Test
-    fun `deve retornar retornar um objeto do tipo phone na lista de telefones do usuário`() {
-        val converter = UserRequestToUserConverter(userValidator)
-
-        val userRequest = UserRequest(
-            "Geraldo Azevedo",
-            "geraldo.azevedo@gmail.com",
-            "12345678",
-            listOf(PhoneRequest("11", "12345678")))
-
-        every { userValidator.validateUserRequest(context) }.returns(userRequest)
-
-        val user = converter.convert(context)
-
-        Assert.assertEquals(1, user.phones!!.size)
     }
 }

@@ -27,15 +27,15 @@ class UserValidator {
             throw BadRequestResponse("O Campo Password deve ser preenchido")
         }
 
-        if (userRequest.phones.isNullOrEmpty()) {
-            throw BadRequestResponse("O Campo Phones deve ser preenchido")
-        }
-
-        val hasInvalidPhoneDDD = userRequest.phones!!.any { it.ddd.isNullOrBlank() || it.ddd.isEmpty() }
-        if (hasInvalidPhoneDDD) throw BadRequestResponse("O Campo DDD deve ser preenchido")
-
-        val hasInvalidPhoneNumber = userRequest.phones!!.any { it.number.isNullOrBlank() || it.number.isEmpty() }
-        if (hasInvalidPhoneNumber) throw BadRequestResponse("O Campo Number deve ser preenchido")
+//        if (userRequest.phones.isNullOrEmpty()) {
+//            throw BadRequestResponse("O Campo Phones deve ser preenchido")
+//        }
+//
+//        val hasInvalidPhoneDDD = userRequest.phones!!.any { it.ddd.isNullOrBlank() || it.ddd.isEmpty() }
+//        if (hasInvalidPhoneDDD) throw BadRequestResponse("O Campo DDD deve ser preenchido")
+//
+//        val hasInvalidPhoneNumber = userRequest.phones!!.any { it.number.isNullOrBlank() || it.number.isEmpty() }
+//        if (hasInvalidPhoneNumber) throw BadRequestResponse("O Campo Number deve ser preenchido")
 
         return userRequest
     }

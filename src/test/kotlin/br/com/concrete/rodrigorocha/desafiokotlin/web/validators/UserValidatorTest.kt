@@ -1,6 +1,5 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.web.validators
 
-import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.PhoneRequest
 import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.UserRequest
 import io.javalin.BadRequestResponse
 import io.javalin.Context
@@ -26,8 +25,7 @@ class UserValidatorTest {
         val userRequestStub = UserRequest(
             "Geraldo Azevedo",
             "geraldo.azevedo@gmail.com",
-            "12345678",
-            listOf(PhoneRequest("11", "12345678")))
+            "12345678")
 
         every { context.body<UserRequest>() }.returns(userRequestStub)
 
@@ -43,8 +41,7 @@ class UserValidatorTest {
         val userRequestStub = UserRequest(
             "Geraldo Azevedo",
             "geraldo.azevedo@gmail.com",
-            "12345678",
-            listOf(PhoneRequest("11", "12345678")))
+            "12345678")
 
         every { context.body<UserRequest>() }.returns(userRequestStub)
 
@@ -60,48 +57,13 @@ class UserValidatorTest {
         val userRequestStub = UserRequest(
             "Geraldo Azevedo",
             "geraldo.azevedo@gmail.com",
-            "12345678",
-            listOf(PhoneRequest("11", "12345678")))
+            "12345678")
 
         every { context.body<UserRequest>() }.returns(userRequestStub)
 
         val userRequest = validator.validateUserRequest(context)
 
         Assert.assertEquals("12345678", userRequest.password)
-    }
-
-    @Test
-    fun `deve retornar um objeto do tipo UserRequest contendo a propriedade phones com valor diferente de null`() {
-        val validator = UserValidator()
-
-        val userRequestStub = UserRequest(
-            "Geraldo Azevedo",
-            "geraldo.azevedo@gmail.com",
-            "12345678",
-            listOf(PhoneRequest("11", "12345678")))
-
-        every { context.body<UserRequest>() }.returns(userRequestStub)
-
-        val userRequest = validator.validateUserRequest(context)
-
-        Assert.assertNotNull(userRequest.phones)
-    }
-
-    @Test
-    fun `deve retornar um objeto do tipo UserRequest contendo a propriedade phones com tamanho 1`() {
-        val validator = UserValidator()
-
-        val userRequestStub = UserRequest(
-            "Geraldo Azevedo",
-            "geraldo.azevedo@gmail.com",
-            "12345678",
-            listOf(PhoneRequest("11", "12345678")))
-
-        every { context.body<UserRequest>() }.returns(userRequestStub)
-
-        val userRequest = validator.validateUserRequest(context)
-
-        Assert.assertEquals(1, userRequest.phones!!.size)
     }
 
     @Test(expected = BadRequestResponse::class)
@@ -111,8 +73,7 @@ class UserValidatorTest {
         val userRequestStub = UserRequest(
             "",
             "geraldo.azevedo@gmail.com",
-            "12345678",
-            listOf(PhoneRequest("11", "12345678")))
+            "12345678")
 
         every { context.body<UserRequest>() }.returns(userRequestStub)
 
@@ -126,8 +87,7 @@ class UserValidatorTest {
         val userRequestStub = UserRequest(
             "Geraldo Azevedo",
             "",
-            "12345678",
-            listOf(PhoneRequest("11", "12345678")))
+            "12345678")
 
         every { context.body<UserRequest>() }.returns(userRequestStub)
 
@@ -141,38 +101,7 @@ class UserValidatorTest {
         val userRequestStub = UserRequest(
             "Geraldo Azevedo",
             "geraldo.azevedo@gmail.com",
-            "",
-            listOf(PhoneRequest("11", "12345678")))
-
-        every { context.body<UserRequest>() }.returns(userRequestStub)
-
-        validator.validateUserRequest(context)
-    }
-
-    @Test(expected = BadRequestResponse::class)
-    fun `quando o campo ddd estiver vazio retornar a BadRequestResponse Exception`() {
-        val validator = UserValidator()
-
-        val userRequestStub = UserRequest(
-            "Geraldo Azevedo",
-            "geraldo.azevedo@gmail.com",
-            "12345678",
-            listOf(PhoneRequest("", "12345678")))
-
-        every { context.body<UserRequest>() }.returns(userRequestStub)
-
-        validator.validateUserRequest(context)
-    }
-
-    @Test(expected = BadRequestResponse::class)
-    fun `quando o campo number estiver vazio retornar a BadRequestResponse Exception`() {
-        val validator = UserValidator()
-
-        val userRequestStub = UserRequest(
-            "Geraldo Azevedo",
-            "geraldo.azevedo@gmail.com",
-            "12345678",
-            listOf(PhoneRequest("11", "")))
+            "")
 
         every { context.body<UserRequest>() }.returns(userRequestStub)
 

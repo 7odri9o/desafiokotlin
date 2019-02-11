@@ -1,17 +1,19 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.domain.service
 
 import br.com.concrete.rodrigorocha.desafiokotlin.domain.dto.User
-import java.util.*
+import br.com.concrete.rodrigorocha.desafiokotlin.domain.repositories.UserRepository
+import org.eclipse.jetty.http.HttpStatus
 
-class UserService {
+class UserService(private val userRepository: UserRepository) {
 
     fun create(user: User) : User {
-        val currentDate = Date()
-        user.id = 1
-        user.created = currentDate
-        user.last_login = currentDate
-        user.modified = currentDate
-        user.token = "TOKEN"
-        return user
+        userRepository.findByEmail(user.email).takeIf {
+            it != null
+        }?.apply {
+            throw io.javalin.HttpResponseException(
+                HttpStatus.BAD_REQUEST_400,
+                "Email já cadastrado") }
+
+        return userRepository.create(User(null, user.name, user.email, user.password ))
     }
 }

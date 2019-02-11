@@ -1,11 +1,8 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.web.controllers
 
-import br.com.concrete.rodrigorocha.desafiokotlin.domain.dto.Phone
-import br.com.concrete.rodrigorocha.desafiokotlin.domain.dto.User
 import br.com.concrete.rodrigorocha.desafiokotlin.domain.service.UserService
 import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserRequestToUserConverter
 import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserToUserResponseConverter
-import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.PhoneRequest
 import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.UserRequest
 import io.javalin.BadRequestResponse
 import io.javalin.Context
@@ -15,7 +12,6 @@ import io.mockk.verify
 import org.eclipse.jetty.http.HttpStatus
 import org.junit.Before
 import org.junit.Test
-import java.util.*
 
 class UserControllerUnitTest {
 
@@ -35,19 +31,6 @@ class UserControllerUnitTest {
     @Test
     fun `deve retornar status code 201`() {
 
-        val currentDate = Date()
-
-        val user = User(
-            1,
-            "Geraldo Azevedo",
-            "geraldo.azevedo@gmail.com",
-            "12345678",
-            listOf(Phone(1, "11", "12345678")),
-            currentDate,
-            currentDate,
-            currentDate,
-            "token")
-
         val controller = UserController(requestConverter, responseConverter, userService)
         controller.register(contextMock)
 
@@ -58,8 +41,7 @@ class UserControllerUnitTest {
     fun `deve retornar uma exception com a mensagem do nome`() {
         val email = "geraldo.azevedo"
         val password = "12345678"
-        val phones = listOf(PhoneRequest("11", "12345678"))
-        val userRequest = UserRequest("", email, password, phones)
+        val userRequest = UserRequest("", email, password)
 
         every { requestConverter.convert(contextMock) }.throws(BadRequestResponse("O Campo Name deve ser preenchido"))
 

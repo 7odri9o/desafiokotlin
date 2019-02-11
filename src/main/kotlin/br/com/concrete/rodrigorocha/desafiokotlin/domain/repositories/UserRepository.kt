@@ -1,20 +1,48 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.domain.repositories
 
+import br.com.concrete.rodrigorocha.desafiokotlin.domain.database.Users
 import br.com.concrete.rodrigorocha.desafiokotlin.domain.dto.User
-import org.jetbrains.exposed.dao.LongIdTable
-import org.jetbrains.exposed.sql.Column
-import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.transactions.transaction
+import java.util.*
+import javax.sql.DataSource
 
-internal object Users: LongIdTable() {
-    val name: Column<String> = varchar("name", 200)
-    val email: Column<String> = varchar("email", 200).uniqueIndex()
-    val password: Column<String> = varchar("password", 20)
+class UserRepository(private val dataSource: DataSource) {
 
-    fun rowToUser(row: ResultRow): User {
-        return User(
-            id = row[Users.id].value,
-            email = row[Users.email],
-            name = row[Users.name]
-        )
+    init {
+        transaction(Database.connect(dataSource)) {
+            SchemaUtils.create(Users)
+        }
     }
+
+    fun findByEmail(email: String): User? {
+        return transaction(Database.connect(dataSource)) {
+            Users.select { Users.email eq email }
+                .firstOrNull()
+                ?.let { Users.rowToUser(it) }
+        }
+    }
+
+    fun create(user: User): User {
+        return transaction {
+            val id = Users.insertAndGetId { row ->
+                row[Users.name] = user.name
+                row[Users.email] = user.email
+                row[Users.password] = user.password!!
+            }.value
+
+            val currentDate = Date()
+
+            val test = user.copy(id = id,
+                created = currentDate,
+                modified = currentDate,
+                last_login = currentDate,
+                token = "token")
+            test
+        }
+    }
+
 }

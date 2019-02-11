@@ -7,7 +7,6 @@ data class User(
     val name: String,
     val email: String,
     var password: String? = null,
-    val phones: List<Phone>? = null,
     var created: Date? = null,
     var modified: Date? = null,
     var last_login: Date? = null,

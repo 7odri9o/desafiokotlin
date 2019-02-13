@@ -49,14 +49,13 @@ class ApplicationConfig : KoinComponent {
     }
 
     private fun configureMapper() {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
         JavalinJackson.configure(
             jacksonObjectMapper()
+                .setDateFormat(dateFormat)
                 .registerModule(JodaModule())
                 .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
-                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                .setDateFormat(dateFormat)
-                .configure(SerializationFeature.WRITE_DATES_WITH_ZONE_ID, true))
+                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS , false))
 
     }
 }

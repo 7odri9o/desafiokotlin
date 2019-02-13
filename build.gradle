@@ -18,6 +18,7 @@ dependencies {
     compile "io.javalin:javalin:2.+"
     compile "com.fasterxml.jackson.core:jackson-databind:2.+"
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.+"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.9.8"
     compile "org.slf4j:slf4j-simple:1.7.25"
     compile "org.koin:koin-core:1.+"
     compile "com.auth0:java-jwt:3.+"

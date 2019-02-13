@@ -10,6 +10,7 @@ data class UserDTO(
     var email: String? = null,
     var phones: List<PhoneDTO>? = listOf(),
     @JsonIgnore var password: String? = null,
+
     var created: DateTime? = null,
     var modified: DateTime? = null,
     var token: String? = null,

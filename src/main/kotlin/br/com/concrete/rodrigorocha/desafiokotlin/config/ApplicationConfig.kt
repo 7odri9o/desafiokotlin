@@ -5,6 +5,7 @@ import br.com.concrete.rodrigorocha.desafiokotlin.web.Router
 import br.com.concrete.rodrigorocha.desafiokotlin.web.handlers.ErrorExceptionMapping
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.joda.JodaModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
@@ -51,6 +52,7 @@ class ApplicationConfig : KoinComponent {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         JavalinJackson.configure(
             jacksonObjectMapper()
+                .registerModule(JodaModule())
                 .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                 .setDateFormat(dateFormat)

@@ -1,9 +1,8 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.web.controllers
 
-import br.com.concrete.rodrigorocha.desafiokotlin.domain.service.UserService
+import br.com.concrete.rodrigorocha.desafiokotlin.service.UserService
 import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserRequestToUserConverter
 import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserToUserResponseConverter
-import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.UserRequest
 import io.javalin.BadRequestResponse
 import io.javalin.Context
 import io.mockk.every

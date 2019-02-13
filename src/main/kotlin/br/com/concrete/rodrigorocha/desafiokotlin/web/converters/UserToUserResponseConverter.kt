@@ -1,18 +1,18 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.web.converters
 
-import br.com.concrete.rodrigorocha.desafiokotlin.domain.dto.User
-import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.UserResponse
+import br.com.concrete.rodrigorocha.desafiokotlin.domain.UserDTO
 
 class UserToUserResponseConverter {
 
-    fun convert(user: User) : UserResponse {
-        return UserResponse(
-            user.id!!,
-            user.created.toString(),
-            user.modified.toString(),
-            user.last_login.toString(),
-            user.token!!,
-            user.name,
-            user.email)
+    fun convert(user: UserDTO) : UserDTO {
+        return UserDTO(
+            id = user.id!!,
+            created = user.created,
+            modified = user.modified,
+            lastLogin = user.lastLogin,
+            token = user.token,
+            name = user.name,
+            email = user.email
+        )
     }
 }

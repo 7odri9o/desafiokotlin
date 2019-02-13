@@ -1,7 +1,8 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.config
 
-import br.com.concrete.rodrigorocha.desafiokotlin.domain.repositories.UserRepository
-import br.com.concrete.rodrigorocha.desafiokotlin.domain.service.UserService
+import br.com.concrete.rodrigorocha.desafiokotlin.repositories.PhoneRepository
+import br.com.concrete.rodrigorocha.desafiokotlin.repositories.UserRepository
+import br.com.concrete.rodrigorocha.desafiokotlin.service.UserService
 import br.com.concrete.rodrigorocha.desafiokotlin.web.Router
 import br.com.concrete.rodrigorocha.desafiokotlin.web.controllers.UserController
 import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserRequestToUserConverter
@@ -13,11 +14,6 @@ object ModulesConfig {
 
     private val configModule = module {
         single { ApplicationConfig() }
-        single { DbConfig(
-            getProperty("jdbc.url"),
-            getProperty("db.username"),
-            getProperty("db.password")).getDataSource()
-        }
         single { Router(get()) }
     }
 
@@ -25,8 +21,9 @@ object ModulesConfig {
         single { UserValidator() }
         single { UserRequestToUserConverter(get()) }
         single { UserToUserResponseConverter() }
-        single { UserRepository(get()) }
-        single { UserService(get()) }
+        single { UserRepository() }
+        single { PhoneRepository() }
+        single { UserService(get(), get()) }
         single { UserController(get(), get(), get()) }
     }
 

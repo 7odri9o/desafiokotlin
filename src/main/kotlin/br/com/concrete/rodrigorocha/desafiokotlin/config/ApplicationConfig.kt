@@ -6,6 +6,8 @@ import br.com.concrete.rodrigorocha.desafiokotlin.web.handlers.ErrorExceptionMap
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
 import io.javalin.Javalin
 import io.javalin.json.JavalinJackson
 import org.koin.core.KoinProperties
@@ -22,6 +24,9 @@ class ApplicationConfig : KoinComponent {
     fun setup() : Javalin {
         StandAloneContext.startKoin(allModules,
             KoinProperties(true, true))
+
+        DatabaseFactory.init(getDBConfig())
+
         return Javalin.create()
             .also { app ->
                 this.configureMapper()
@@ -31,6 +36,15 @@ class ApplicationConfig : KoinComponent {
                 ErrorExceptionMapping.register(app)
                 app.port(getProperty("server_port"))
             }
+    }
+
+    private fun getDBConfig() : HikariDataSource {
+        val config = HikariConfig()
+        config.jdbcUrl = getProperty("jdbc.url")
+        config.username = getProperty("db.username")
+        config.password = getProperty("db.password")
+        config.validate()
+        return HikariDataSource(config)
     }
 
     private fun configureMapper() {

@@ -1,6 +1,5 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.web.converters
 
-import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.UserRequest
 import br.com.concrete.rodrigorocha.desafiokotlin.web.validators.UserValidator
 import io.javalin.Context
 import io.mockk.every

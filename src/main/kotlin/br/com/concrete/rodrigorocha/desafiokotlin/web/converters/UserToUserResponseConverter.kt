@@ -10,6 +10,8 @@ class UserToUserResponseConverter {
             created = user.created,
             modified = user.modified,
             lastLogin = user.lastLogin,
+            password = user.password,
+            phones = user.phones,
             token = user.token,
             name = user.name,
             email = user.email

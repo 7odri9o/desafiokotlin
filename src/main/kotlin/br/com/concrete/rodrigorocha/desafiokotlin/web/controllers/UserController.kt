@@ -15,7 +15,8 @@ class UserController(
         userService.create(userRequestToUserConverter.convert(ctx))
             .apply {
                 ctx.status(HttpStatus.CREATED_201)
-                ctx.json(userToUserResponseConverter.convert(this))
+                val user = userToUserResponseConverter.convert(this)
+                ctx.json(user)
             }
     }
 }

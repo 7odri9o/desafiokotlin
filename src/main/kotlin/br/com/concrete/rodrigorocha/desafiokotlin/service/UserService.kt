@@ -9,6 +9,7 @@ import br.com.concrete.rodrigorocha.desafiokotlin.security.JWTGenerator
 import br.com.concrete.rodrigorocha.desafiokotlin.util.getNow
 import io.javalin.ConflictResponse
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 class UserService(private val userRepository: UserRepository,
                   private val phoneRepository: PhoneRepository) {
@@ -21,12 +22,31 @@ class UserService(private val userRepository: UserRepository,
         return toUserDTO(storedUser)
     }
 
+    fun findUser(email: String): UserDTO? {
+        return transaction {
+            userRepository.findByEmail(email)?.let {
+                toUserDTO(it)
+            }
+        }
+    }
+
     private fun saveUser(newUser: UserDTO): User {
+
+        setPassword(newUser)
+
         return transaction {
             val user = userRepository.save(setDates(newUser))
             user.token = JWTGenerator.sign(UserDTO(id = user.id.value), user.created, 30)
             user
         }
+    }
+
+    private fun setPassword(newUser: UserDTO) {
+        newUser.password = encrypt(newUser.password!!)
+    }
+
+    private fun encrypt(password: String): String {
+        return BCryptPasswordEncoder().encode(password)
     }
 
     private fun toUserDTO(user: User) : UserDTO {

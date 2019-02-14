@@ -24,4 +24,8 @@ class UserRepository {
     fun countByEmail(email: String): Int {
         return Users.select { Users.email eq email }.count()
     }
+
+    fun findByEmail(email: String): User? {
+        return User.find { Users.email eq email }.firstOrNull()
+    }
 }

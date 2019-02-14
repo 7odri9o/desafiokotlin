@@ -19,7 +19,12 @@ class PhoneRepository {
 
     fun select(owner: User) : List<PhoneDTO> {
         return transaction {
-            owner.phones.map { phone -> PhoneDTO(ddd = phone.ddd, number = phone.number) }
+            owner.phones.map { phone ->
+                PhoneDTO(
+                    id = phone.id.value,
+                    ddd = phone.ddd,
+                    number = phone.number)
+            }
         }
     }
 }

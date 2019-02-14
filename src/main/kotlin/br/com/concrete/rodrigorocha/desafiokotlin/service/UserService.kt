@@ -1,12 +1,10 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.service
 
-import br.com.concrete.rodrigorocha.desafiokotlin.domain.PhoneDTO
 import br.com.concrete.rodrigorocha.desafiokotlin.domain.User
 import br.com.concrete.rodrigorocha.desafiokotlin.domain.UserDTO
 import br.com.concrete.rodrigorocha.desafiokotlin.repositories.PhoneRepository
 import br.com.concrete.rodrigorocha.desafiokotlin.repositories.UserRepository
 import br.com.concrete.rodrigorocha.desafiokotlin.util.now
-import org.jetbrains.exposed.sql.transactions.transaction
 
 class UserService(private val userRepository: UserRepository,
                   private val phoneRepository: PhoneRepository
@@ -35,9 +33,7 @@ class UserService(private val userRepository: UserRepository,
 
     private fun toUserDTO(user: User) : UserDTO {
 
-        val phones = transaction {
-            user.phones.map { phone -> PhoneDTO(ddd = phone.ddd, number = phone.number) }
-        }
+        val phones = phoneRepository.select(user)
 
         return UserDTO(
             id = user.id.value,

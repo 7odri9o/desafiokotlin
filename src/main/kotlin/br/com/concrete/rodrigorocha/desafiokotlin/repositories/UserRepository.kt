@@ -5,6 +5,8 @@ import br.com.concrete.rodrigorocha.desafiokotlin.domain.User
 import br.com.concrete.rodrigorocha.desafiokotlin.domain.UserDTO
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
+import java.util.*
 
 class UserRepository {
 
@@ -27,5 +29,15 @@ class UserRepository {
 
     fun findByEmail(email: String): User? {
         return User.find { Users.email eq email }.firstOrNull()
+    }
+
+    fun findById(id: UUID): User? {
+        return User.findById(id)
+    }
+
+    fun updateLastLogin(user: UserDTO) : Int {
+        return Users.update({ Users.id eq user.id}) {
+            it[lastLogin] = user.lastLogin!!
+        }
     }
 }

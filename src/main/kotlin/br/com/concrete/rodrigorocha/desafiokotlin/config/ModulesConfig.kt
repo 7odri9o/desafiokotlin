@@ -4,6 +4,7 @@ import br.com.concrete.rodrigorocha.desafiokotlin.repositories.PhoneRepository
 import br.com.concrete.rodrigorocha.desafiokotlin.repositories.UserRepository
 import br.com.concrete.rodrigorocha.desafiokotlin.service.UserService
 import br.com.concrete.rodrigorocha.desafiokotlin.web.Router
+import br.com.concrete.rodrigorocha.desafiokotlin.web.controllers.LoginController
 import br.com.concrete.rodrigorocha.desafiokotlin.web.controllers.UserController
 import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserRequestToUserConverter
 import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserToUserResponseConverter
@@ -14,7 +15,7 @@ object ModulesConfig {
 
     private val configModule = module {
         single { ApplicationConfig() }
-        single { Router(get()) }
+        single { Router(get(), get()) }
     }
 
     private val userModule = module {
@@ -25,6 +26,7 @@ object ModulesConfig {
         single { PhoneRepository() }
         single { UserService(get(), get()) }
         single { UserController(get(), get(), get()) }
+        single { LoginController() }
     }
 
     internal val allModules = listOf(

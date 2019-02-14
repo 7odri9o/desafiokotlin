@@ -15,7 +15,6 @@ class UserRepository {
                 created = user.created!!
                 modified = user.modified!!
                 lastLogin = user.lastLogin!!
-                token = user.token!!
             }
         }
     }

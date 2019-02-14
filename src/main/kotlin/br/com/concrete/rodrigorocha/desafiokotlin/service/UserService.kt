@@ -6,9 +6,9 @@ import br.com.concrete.rodrigorocha.desafiokotlin.domain.UserDTO
 import br.com.concrete.rodrigorocha.desafiokotlin.repositories.PhoneRepository
 import br.com.concrete.rodrigorocha.desafiokotlin.repositories.UserRepository
 import br.com.concrete.rodrigorocha.desafiokotlin.security.JWTGenerator
+import br.com.concrete.rodrigorocha.desafiokotlin.util.getNow
 import io.javalin.ConflictResponse
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.joda.time.DateTime
 
 class UserService(private val userRepository: UserRepository,
                   private val phoneRepository: PhoneRepository) {
@@ -16,11 +16,8 @@ class UserService(private val userRepository: UserRepository,
     fun create(newUser: UserDTO) : UserDTO {
 
         isEmailAlreadyUsed(newUser)
-
         val storedUser = saveUser(newUser)
-
         savePhones(newUser.phones, storedUser)
-
         return toUserDTO(storedUser)
     }
 
@@ -63,7 +60,7 @@ class UserService(private val userRepository: UserRepository,
     }
 
     private fun setDates(user: UserDTO) : UserDTO {
-        val createDate = DateTime.now()
+        val createDate = getNow()
         return user.copy(
             created = createDate,
             modified = createDate,

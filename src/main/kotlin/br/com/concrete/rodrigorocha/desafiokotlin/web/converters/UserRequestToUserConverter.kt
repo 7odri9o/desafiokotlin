@@ -2,16 +2,16 @@ package br.com.concrete.rodrigorocha.desafiokotlin.web.converters
 
 import br.com.concrete.rodrigorocha.desafiokotlin.domain.PhoneDTO
 import br.com.concrete.rodrigorocha.desafiokotlin.domain.UserDTO
-import br.com.concrete.rodrigorocha.desafiokotlin.web.validators.UserValidator
+import br.com.concrete.rodrigorocha.desafiokotlin.web.validators.ValidateFields
 import io.javalin.Context
 
 class UserRequestToUserConverter(
-    private val userValidator: UserValidator
+    private val validateFields: ValidateFields
 ) {
 
     fun convert(ctx: Context) : UserDTO {
 
-        val userRequest =  userValidator.validateUserRequest(ctx)
+        val userRequest =  validateFields.validateUserRequest(ctx)
 
         return UserDTO(
             name = userRequest.name!!,

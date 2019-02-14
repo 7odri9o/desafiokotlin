@@ -1,8 +1,8 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.database
 
-import org.jetbrains.exposed.dao.LongIdTable
+import org.jetbrains.exposed.dao.UUIDTable
 
-internal object Users : LongIdTable() {
+internal object Users : UUIDTable() {
 
     val name = Users.varchar("name", 200)
     val email = Users.varchar("email", 200).uniqueIndex()

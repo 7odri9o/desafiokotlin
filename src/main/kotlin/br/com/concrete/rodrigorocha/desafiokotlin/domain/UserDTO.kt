@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.joda.time.DateTime
+import java.util.*
 
 data class UserDTO(
-    var id: Long? = null,
+    var id: UUID? = null,
     var name: String? = null,
     var email: String? = null,
     var phones: List<PhoneDTO>? = listOf(),

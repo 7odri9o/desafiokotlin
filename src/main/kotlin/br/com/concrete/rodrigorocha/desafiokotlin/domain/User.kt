@@ -5,9 +5,10 @@ import br.com.concrete.rodrigorocha.desafiokotlin.database.Users
 import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass
 import org.jetbrains.exposed.dao.EntityID
+import java.util.*
 
-class User(id: EntityID<Long>) : Entity<Long>(id) {
-    companion object : EntityClass<Long, User>(Users)
+class User(id: EntityID<UUID>) : Entity<UUID>(id) {
+    companion object : EntityClass<UUID, User>(Users)
 
     var name by Users.name
     var email by Users.email

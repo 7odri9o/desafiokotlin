@@ -30,6 +30,15 @@ class UserService(private val userRepository: UserRepository,
         }
     }
 
+    fun updateLastLogin(user: UserDTO): UserDTO {
+        return transaction {
+            user.lastLogin = getNow()
+            val updated = userRepository.updateLastLogin(user)
+            if (updated != 1) null
+            toUserDTO(userRepository.findById(user.id!!)!!)
+        }
+    }
+
     private fun saveUser(newUser: UserDTO): User {
 
         setPassword(newUser)
@@ -42,11 +51,7 @@ class UserService(private val userRepository: UserRepository,
     }
 
     private fun setPassword(newUser: UserDTO) {
-        newUser.password = encrypt(newUser.password!!)
-    }
-
-    private fun encrypt(password: String): String {
-        return BCryptPasswordEncoder().encode(password)
+        newUser.password = BCryptPasswordEncoder().encode(newUser.password)
     }
 
     private fun toUserDTO(user: User) : UserDTO {
@@ -58,6 +63,7 @@ class UserService(private val userRepository: UserRepository,
             name = user.name,
             email = user.email,
             phones = phones,
+            password = user.password,
             created = user.created,
             modified = user.modified,
             lastLogin = user.lastLogin,

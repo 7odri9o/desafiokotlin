@@ -2,6 +2,7 @@ package br.com.concrete.rodrigorocha.desafiokotlin.config
 
 import br.com.concrete.rodrigorocha.desafiokotlin.repositories.PhoneRepository
 import br.com.concrete.rodrigorocha.desafiokotlin.repositories.UserRepository
+import br.com.concrete.rodrigorocha.desafiokotlin.service.LoginService
 import br.com.concrete.rodrigorocha.desafiokotlin.service.UserService
 import br.com.concrete.rodrigorocha.desafiokotlin.web.Router
 import br.com.concrete.rodrigorocha.desafiokotlin.web.controllers.LoginController
@@ -28,7 +29,8 @@ object ModulesConfig {
         single { PhoneRepository() }
         single { UserService(get(), get()) }
         single { UserController(get(), get(), get()) }
-        single { LoginController(get()) }
+        single { LoginService(get()) }
+        single { LoginController(get(), get()) }
     }
 
     internal val allModules = listOf(

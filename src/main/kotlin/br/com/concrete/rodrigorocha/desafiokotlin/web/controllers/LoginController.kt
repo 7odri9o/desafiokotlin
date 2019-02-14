@@ -3,13 +3,17 @@ package br.com.concrete.rodrigorocha.desafiokotlin.web.controllers
 import br.com.concrete.rodrigorocha.desafiokotlin.domain.PhoneDTO
 import br.com.concrete.rodrigorocha.desafiokotlin.domain.UserDTO
 import br.com.concrete.rodrigorocha.desafiokotlin.util.getNow
+import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.LoginRequestToLoginConverter
 import io.javalin.Context
 import org.eclipse.jetty.http.HttpStatus
 import java.util.*
 
-class LoginController {
+class LoginController(
+    private val loginRequestToLoginConverter : LoginRequestToLoginConverter) {
 
     fun login(ctx: Context) {
+
+        val request = loginRequestToLoginConverter.convert(ctx)
         ctx.status(HttpStatus.OK_200)
         val currentDate = getNow()
         val user = UserDTO(

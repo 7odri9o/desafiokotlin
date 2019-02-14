@@ -17,15 +17,19 @@ class UserService(private val userRepository: UserRepository,
 
         isEmailAlreadyUsed(newUser)
 
-        val storedUser = transaction {
-            val user = userRepository.save(setDates(newUser))
-            user.token = JWTGenerator.sign(UserDTO(id = user.id.value), user.created, 30)
-            user
-        }
+        val storedUser = saveUser(newUser)
 
         savePhones(newUser.phones, storedUser)
 
         return toUserDTO(storedUser)
+    }
+
+    private fun saveUser(newUser: UserDTO): User {
+        return transaction {
+            val user = userRepository.save(setDates(newUser))
+            user.token = JWTGenerator.sign(UserDTO(id = user.id.value), user.created, 30)
+            user
+        }
     }
 
     private fun toUserDTO(user: User) : UserDTO {

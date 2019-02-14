@@ -5,8 +5,8 @@ import br.com.concrete.rodrigorocha.desafiokotlin.domain.User
 import br.com.concrete.rodrigorocha.desafiokotlin.domain.UserDTO
 import br.com.concrete.rodrigorocha.desafiokotlin.repositories.PhoneRepository
 import br.com.concrete.rodrigorocha.desafiokotlin.repositories.UserRepository
+import br.com.concrete.rodrigorocha.desafiokotlin.util.now
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.joda.time.DateTime
 
 class UserService(private val userRepository: UserRepository,
                   private val phoneRepository: PhoneRepository
@@ -14,29 +14,23 @@ class UserService(private val userRepository: UserRepository,
 
     fun create(user: UserDTO) : UserDTO {
 
-        val newUser = generateToken(setDates(user))
-        val storedUser = userRepository.save(newUser)
+        val currentDate = now()
 
-        newUser.phones?.forEach {
+        val storedUser = userRepository.save(
+            user.copy(
+                token = "TOKEN",
+                created = currentDate,
+                lastLogin = currentDate,
+                modified = currentDate
+            )
+        )
+
+        user.phones?.forEach {
             phoneRepository.save(it, storedUser)
         }
 
         return toUserDTO(storedUser)
 
-    }
-
-    private fun setDates(user: UserDTO) : UserDTO {
-
-        val now = DateTime.now()
-
-        return user.copy(
-            created = now,
-            modified = now,
-            lastLogin = now)
-    }
-
-    private fun generateToken(user: UserDTO) : UserDTO {
-        return user.copy(token = "TOKEN")
     }
 
     private fun toUserDTO(user: User) : UserDTO {

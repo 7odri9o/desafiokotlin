@@ -1,10 +1,7 @@
-package br.com.concrete.rodrigorocha.desafiokotlin
+package br.com.concrete.rodrigorocha.desafiokotlin.util
 
 import org.joda.time.DateTime
 
-class TimeProvider {
-
-    fun now() : DateTime {
-        return DateTime.now()
-    }
+fun now() : DateTime {
+    return DateTime.now()
 }

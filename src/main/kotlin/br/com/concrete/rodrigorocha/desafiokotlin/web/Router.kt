@@ -3,8 +3,7 @@ package br.com.concrete.rodrigorocha.desafiokotlin.web
 import br.com.concrete.rodrigorocha.desafiokotlin.web.controllers.LoginController
 import br.com.concrete.rodrigorocha.desafiokotlin.web.controllers.UserController
 import io.javalin.Javalin
-import io.javalin.apibuilder.ApiBuilder.path
-import io.javalin.apibuilder.ApiBuilder.post
+import io.javalin.apibuilder.ApiBuilder.*
 import org.koin.standalone.KoinComponent
 
 class Router(
@@ -14,6 +13,7 @@ class Router(
     fun register(app: Javalin) {
         app.routes {
             path("users") {
+                get(":id", userController::getUser)
                 post(userController::register)
             }
         }

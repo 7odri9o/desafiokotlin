@@ -5,6 +5,7 @@ import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserRequestToUs
 import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserToUserResponseConverter
 import io.javalin.Context
 import org.eclipse.jetty.http.HttpStatus
+import java.util.*
 
 class UserController(
     private val userRequestToUserConverter: UserRequestToUserConverter,
@@ -18,5 +19,14 @@ class UserController(
                 val user = userToUserResponseConverter.convert(this)
                 ctx.json(user)
             }
+    }
+
+    fun getUser(ctx: Context) {
+
+        val id = UUID.fromString(ctx.pathParam("id"))
+
+        val user = userService.getUser(id)
+        ctx.status(HttpStatus.OK_200)
+        ctx.json(user)
     }
 }

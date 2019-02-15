@@ -28,5 +28,10 @@ object ErrorExceptionMapping {
             val error = ErrorResponse(message = e.message)
             ctx.json(error).status(HttpStatus.UNAUTHORIZED_401)
         }
+
+        app.exception(IllegalArgumentException::class.java) { e, ctx ->
+            val error = ErrorResponse(message = e.message)
+            ctx.json(error).status(HttpStatus.BAD_REQUEST_400)
+        }
     }
 }

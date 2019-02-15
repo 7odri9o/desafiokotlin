@@ -10,6 +10,7 @@ import br.com.concrete.rodrigorocha.desafiokotlin.util.getNow
 import io.javalin.ConflictResponse
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import java.util.*
 
 class UserService(private val userRepository: UserRepository,
                   private val phoneRepository: PhoneRepository) {
@@ -20,6 +21,14 @@ class UserService(private val userRepository: UserRepository,
         val storedUser = saveUser(newUser)
         savePhones(newUser.phones, storedUser)
         return toUserDTO(storedUser)
+    }
+
+    fun getUser(id: UUID): UserDTO {
+        return transaction {
+            userRepository.findById(id).let {
+                toUserDTO(it)
+            }
+        }
     }
 
     fun findUser(email: String): UserDTO? {
@@ -54,7 +63,9 @@ class UserService(private val userRepository: UserRepository,
         newUser.password = BCryptPasswordEncoder().encode(newUser.password)
     }
 
-    private fun toUserDTO(user: User) : UserDTO {
+    private fun toUserDTO(user: User?) : UserDTO {
+
+        if (user == null) throw IllegalArgumentException("User cannot be null")
 
         val phones = phoneRepository.select(user)
 

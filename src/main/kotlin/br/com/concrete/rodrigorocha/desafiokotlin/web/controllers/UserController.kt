@@ -4,6 +4,7 @@ import br.com.concrete.rodrigorocha.desafiokotlin.service.UserService
 import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserRequestToUserConverter
 import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserToUserResponseConverter
 import io.javalin.Context
+import io.javalin.UnauthorizedResponse
 import org.eclipse.jetty.http.HttpStatus
 import java.util.*
 
@@ -24,8 +25,13 @@ class UserController(
     fun getUser(ctx: Context) {
 
         val id = UUID.fromString(ctx.pathParam("id"))
+        val token = ctx.header("Authorization")?.replace("Bearer ", "")
 
-        val user = userService.getUser(id)
+        if(token.isNullOrBlank()) {
+            throw UnauthorizedResponse("Não Autorizado")
+        }
+
+        val user = userService.getUser(id, token)
         ctx.status(HttpStatus.OK_200)
         ctx.json(user)
     }

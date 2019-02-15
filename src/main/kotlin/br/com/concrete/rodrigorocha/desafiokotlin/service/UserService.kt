@@ -8,7 +8,9 @@ import br.com.concrete.rodrigorocha.desafiokotlin.repositories.UserRepository
 import br.com.concrete.rodrigorocha.desafiokotlin.security.JWTGenerator
 import br.com.concrete.rodrigorocha.desafiokotlin.util.getNow
 import io.javalin.ConflictResponse
+import io.javalin.UnauthorizedResponse
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.joda.time.Minutes
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.util.*
 
@@ -23,12 +25,26 @@ class UserService(private val userRepository: UserRepository,
         return toUserDTO(storedUser)
     }
 
-    fun getUser(id: UUID): UserDTO {
-        return transaction {
+    fun getUser(id: UUID, token: String): UserDTO {
+
+        val user = transaction {
             userRepository.findById(id).let {
+
                 toUserDTO(it)
             }
         }
+
+        if (token != user.token) {
+            throw UnauthorizedResponse("Não Autorizado")
+        }
+
+        val time = Minutes.minutesBetween(user.lastLogin, getNow()).minutes
+
+        if (time > 1) {
+            throw UnauthorizedResponse("Sessão Inválida")
+        }
+
+        return user
     }
 
     fun findUser(email: String): UserDTO? {
@@ -91,7 +107,10 @@ class UserService(private val userRepository: UserRepository,
     }
 
     private fun savePhones(phones: List<PhoneDTO>?, owner: User) {
-        phones?.forEach {
+
+        if (phones == null) throw IllegalArgumentException("Phones cannot be null")
+
+        phones.forEach {
             phoneRepository.save(it, owner)
         }
     }

@@ -8,7 +8,7 @@ import br.com.concrete.rodrigorocha.desafiokotlin.web.Router
 import br.com.concrete.rodrigorocha.desafiokotlin.web.controllers.LoginController
 import br.com.concrete.rodrigorocha.desafiokotlin.web.controllers.UserController
 import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.LoginRequestToLoginConverter
-import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserRequestToUserConverter
+import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.NewUserToUserConverter
 import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserToUserResponseConverter
 import br.com.concrete.rodrigorocha.desafiokotlin.web.validators.ValidateFields
 import org.koin.dsl.module.module
@@ -22,7 +22,7 @@ object ModulesConfig {
 
     private val userModule = module {
         single { ValidateFields() }
-        single { UserRequestToUserConverter(get()) }
+        single { NewUserToUserConverter() }
         single { LoginRequestToLoginConverter(get()) }
         single { UserToUserResponseConverter() }
         single { UserRepository() }

@@ -1,9 +1,8 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.config
 
 import br.com.concrete.rodrigorocha.desafiokotlin.config.ModulesConfig.allModules
-import br.com.concrete.rodrigorocha.desafiokotlin.handlers.AuthorizationHandler
+import br.com.concrete.rodrigorocha.desafiokotlin.handlers.RegisterHandlers
 import br.com.concrete.rodrigorocha.desafiokotlin.web.Router
-import br.com.concrete.rodrigorocha.desafiokotlin.web.handlers.ErrorExceptionMapping
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.joda.JodaModule
@@ -35,8 +34,7 @@ class ApplicationConfig : KoinComponent {
                 app.enableCorsForAllOrigins()
                     .contextPath(getProperty("context"))
                 router.register(app)
-                AuthorizationHandler.register(app)
-                ErrorExceptionMapping.register(app)
+                RegisterHandlers.register(app)
                 app.port(getProperty("server_port"))
             }
     }

@@ -1,4 +1,4 @@
-package br.com.concrete.rodrigorocha.desafiokotlin.handlers.exceptions
+package br.com.concrete.rodrigorocha.desafiokotlin.handlers.before
 
 import io.javalin.Javalin
 import io.javalin.UnauthorizedResponse

@@ -14,6 +14,7 @@ class UserController(
     private val userService: UserService) {
 
     fun register(ctx: Context) {
+
         userService.create(userRequestToUserConverter.convert(ctx))
             .apply {
                 ctx.status(HttpStatus.CREATED_201)

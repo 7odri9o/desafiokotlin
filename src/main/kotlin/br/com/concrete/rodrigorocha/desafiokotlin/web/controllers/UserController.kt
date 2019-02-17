@@ -1,21 +1,24 @@
 package br.com.concrete.rodrigorocha.desafiokotlin.web.controllers
 
 import br.com.concrete.rodrigorocha.desafiokotlin.service.UserService
-import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserRequestToUserConverter
+import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.NewUserToUserConverter
 import br.com.concrete.rodrigorocha.desafiokotlin.web.converters.UserToUserResponseConverter
+import br.com.concrete.rodrigorocha.desafiokotlin.web.dto.NewUserDTO
 import io.javalin.Context
 import io.javalin.UnauthorizedResponse
 import org.eclipse.jetty.http.HttpStatus
 import java.util.*
 
 class UserController(
-    private val userRequestToUserConverter: UserRequestToUserConverter,
+    private val newUserToUserConverter: NewUserToUserConverter,
     private val userToUserResponseConverter: UserToUserResponseConverter,
     private val userService: UserService) {
 
     fun register(ctx: Context) {
 
-        userService.create(userRequestToUserConverter.convert(ctx))
+        val newUser = ctx.body<NewUserDTO>()
+
+        userService.create(newUserToUserConverter.convert(newUser))
             .apply {
                 ctx.status(HttpStatus.CREATED_201)
                 val user = userToUserResponseConverter.convert(this)
